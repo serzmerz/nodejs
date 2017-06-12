@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+      "locationFrom": {
+        "type": "string"
+      },
+      "locationTo": {
+        "type":"string"
+      },
+      "startDate": {
+        "type":"string"
+      },
+      "comeDate": {
+        "type":"string"
+      },
+      "baggage": {
+        "type":"string"
+      },
+      "createdAt": {
+        "type":"string"
+      },
+      "cost": {
+        "type":"string"
+      },
+      "travellTime": {
+        "type":"string"
+      },
+      "status": {
+        "type":"string"
+      },
+      "departureDate": {
+        "type":"string"
+      },
+      "transfer": {
+        "type":"string"
+      }
+  }
+}

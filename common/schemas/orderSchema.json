@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "order",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "locationFrom": {
+        "type": "string"
+      },
+      "locationTo": {
+        "type":"string"
+      },
+      "startDate": {
+        "type":"string"
+      },
+      "comeDate": {
+        "type":"string"
+      },
+      "baggage": {
+        "type":"string"
+      },
+      "adult": {
+        "type":"string"
+      },
+      "childrenUnder12": {
+        "type":"string"
+      },
+      "childrenUnder2": {
+        "type":"string"
+      },
+      "payment": {
+        "type":"string"
+      },
+      "date": {
+        "type":"string"
+      },
+      "comment": {
+        "type":"string"
+      },
+        "status": {
+        "type":"string"
+      },
+        "userId": {
+        "type":"object"
+      }
+
+  },
+    "required": [
+        "locationFrom",
+        "locationTo",
+        "startDate",
+        "comeDate",
+        "date",
+        "userId",
+        "status"
+    ]
+}
