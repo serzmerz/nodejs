@@ -4,7 +4,7 @@ const order = require('./order');
 const offer = require('./offer'); */
 
 const test = require('./test');
-const order = require('./order');
+const server = require('./server');
 
 const router = new express.Router();
 
@@ -13,8 +13,7 @@ router.use('/order', order);
 router.use('/offer', offer); */
 
 router.use('/test', test);
-
-router.use('/order', order);
+router.use('/server', server);
 
 router.get('/status', (req, res) => {
     res.json({ status: 'OK' });
