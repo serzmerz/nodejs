@@ -51,6 +51,31 @@ server.use((error, req, res, next) => {
     next();
 });
 
+/* авторизация в battle.net */
+const passport = require('passport');
+const BnetStrategy = require('passport-bnet').Strategy;
+const BNET_ID = 'tbwpuwyj94v74gn7aqbj8jq7hn5n9rf2';
+const BNET_SECRET = 'aJYaGUadNjX9QKarfgShyfGJcV7r69T9';
+
+// Use the BnetStrategy within Passport.
+passport.use(new BnetStrategy({
+    clientID: BNET_ID,
+    clientSecret: BNET_SECRET,
+    callbackURL: 'https://localhost:3001/auth/bnet/callback',
+    region: 'us'
+}, function(accessToken, refreshToken, profile, done) {
+    return done(null, profile);
+}));
+
+server.get('/auth/bnet',
+    passport.authenticate('bnet'));
+
+server.get('/auth/bnet/callback',
+    passport.authenticate('bnet', { failureRedirect: '/' }),
+    function(req, res) {
+        res.redirect('/');
+    });
+/* end battle.net */
 server.listen(port, () => {
     console.log('The server is running at port ' + port); // eslint-disable-line no-console
 });

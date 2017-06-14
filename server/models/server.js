@@ -8,15 +8,19 @@ const Sequelize = require('sequelize');
     }
 }
 */
-const Test = pg.define('c', {
+const Server = pg.define('s', {
     name: {
         type: Sequelize.STRING
     },
-    description: {
-        type: Sequelize.STRING
+    created_at: {
+        type: Sequelize.INTEGER
+    },
+    updated_at: {
+        type: Sequelize.INTEGER
     }
-}, { tableName: 'category' });
+}, { timestamps: false, tableName: 'Servers' });
 
+/* need to create or replace table */
 /* Test.sync({ force: true }).then(() => {
     // Table created
     return Test.create({
@@ -24,4 +28,4 @@ const Test = pg.define('c', {
         description: 'Hancock'
     });
 }); */
-module.exports = Test;
+module.exports = Server;
