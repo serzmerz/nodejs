@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint . --debug --ignore-path .gitignore --ignore-pattern server/config.js",
-    "test": "npm-run-all lint", 
+    "test": "npm-run-all lint",
     "start": "port=3000 node server",
     "nodemon": "port=3001 nodemon server --watch server/ --watch configs/ --watch common/",
     "config:dev": "cd configs/ && ln -sfn development/ current",
@@ -13,7 +13,7 @@
     "config:container": "cd configs/ && ln -sfn container/ current",
     "config:production": "cd configs/ && ln -sfn production/ current",
     "dev": "NODE_ENV=development npm-run-all config:dev && NODE_ENV=development npm-run-all test --parallel nodemon",
-    "testing": "NODE_ENV=production npm-run-all clean build config:testing start",
+    "testing": "NODE_ENV=production npm-run-all config:testing start",
     "container": "NODE_ENV=production npm-run-all clean build config:container start",
     "production": "NODE_ENV=production npm-run-all clean build config:production start"
   },
