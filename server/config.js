@@ -6,3 +6,4 @@ module.exports = configs(
     'default/node',
     'current/node'
 );
+
