@@ -32,7 +32,12 @@ AuthRouter.post('/token/reject', rejectToken, respondReject);
 AuthRouter.get('/melog', authenticate, isLogin, function(req, res) {
     res.status(200).json(req.user);
 });
-
+AuthRouter.post('/signup', passport.authenticate('signup', {
+    session: false
+}), function(req, res) {
+    console.log(req);
+    res.status(200).json(req.user);
+});
 /* авторизация в battle.net */
 const BnetStrategy = require('passport-bnet').Strategy;
 const BNET_ID = 'tbwpuwyj94v74gn7aqbj8jq7hn5n9rf2';
