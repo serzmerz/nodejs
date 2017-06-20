@@ -18,7 +18,7 @@ const Server = pg.define('s', {
     updated_at: {
         type: Sequelize.INTEGER
     }
-}, { timestamps: false, tableName: 'Servers' });
+}, { timestamps: false, tableName: 'Server' });
 
 /* need to create or replace table */
 /* Test.sync({ force: true }).then(() => {
