@@ -18,15 +18,19 @@ userRouter
                     .json(Object.assign(err, { status: httpCodes.BAD_REQUEST }));
             }); */
         UserModel.findAll().then(data => {
-            res.json({ response: { servers: data } });
+            res.header('Access-Control-Allow-Origin', '*').json({ response: {
+                success: true,
+                users: data } });
         })
             .catch(err => {
-                res.json({ response: err });
+                res.json({ response: {
+                    success: false,
+                    errors: err } });
             });
     })
     .get('/one/:id', function(req, res) {
         UserModel.findById(req.params.id).then(data => {
-            res.json({ response: { server: data } });
+            res.json({ response: { users: data } });
         })
         .catch(err => {
             res.json({ response: err });

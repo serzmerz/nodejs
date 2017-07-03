@@ -24,7 +24,15 @@ server.use(cookieParser());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
-server.use('/1.0', require('./1.0'));
+server.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, Content-type, Accept, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+});
+
+server.use('/', require('./1.0'));
 
 server.use((error, req, res, next) => {
     // Обрабатываем ошибки-редиректы
@@ -46,6 +54,18 @@ server.use((error, req, res, next) => {
     next();
 });
 
-server.listen(port, () => {
+const app = server.listen(port, () => {
     console.log('The server is running at port ' + port); // eslint-disable-line no-console
+});
+
+const io = require('socket.io')(app);
+
+io.on('connection', function(socket) {
+    console.log('a user connected');
+    socket.on('disconnect', function() {
+        console.log('user disconnected');
+    });
+    socket.on('chat message', function(msg) {
+        io.emit('chat message', msg);
+    });
 });

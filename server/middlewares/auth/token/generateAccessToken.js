@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-const SECRET = 'hack this please';
-const TOKENTIME = 120 * 60;
+const CONSTANTS = require('../../../constants');
+const SECRET = CONSTANTS.SECRET;
+const TOKENTIME = CONSTANTS.TOKENTIME;
 
 module.exports = function generateToken(req, res, next) {
     const token = jwt.sign({

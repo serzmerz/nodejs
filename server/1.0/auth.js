@@ -1,6 +1,7 @@
 const express = require('express');
 const AuthRouter = new express.Router();
-const SECRET = 'hack this please';
+const CONSTANTS = require('../constants');
+const SECRET = CONSTANTS.SECRET;
 
 const serialize = require('../middlewares/auth/serialize/serializeUser');
 const generateAccessToken = require('../middlewares/auth/token/generateAccessToken');
@@ -9,12 +10,21 @@ const isLogin = require('../middlewares/auth/isLoggedIn');
 const serializeClient = require('../middlewares/auth/serialize/serializeClient');
 const generateRefreshToken = require('../middlewares/auth/token/generateRefreshToken');
 const validateRefreshToken = require('../middlewares/auth/token/validateRefreshToken');
-const respondToken = require('../middlewares/auth/respond/respondToken');
+// const respondToken = require('../middlewares/auth/respond/respondToken');
 const rejectToken = require('../middlewares/auth/token/rejectToken');
 const respondReject = require('../middlewares/auth/respond/respondReject');
-
+const verify = require('../middlewares/auth/verify');
 const passport = require('../auth');
 
+/* AuthRouter.options('/', function(req, res) {
+    res.header({
+        'Access-Control-Allow-Origin': 'http://localhost:3000',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Origin, Content-type, Accept, Authorization',
+        'Access-Control-Allow-Credentials': 'true'
+    }).send(200);
+});
+*/
 AuthRouter.post('/', passport.initialize(), passport.authenticate(
     'local', {
         session: false
@@ -22,11 +32,17 @@ AuthRouter.post('/', passport.initialize(), passport.authenticate(
 const expressJwt = require('express-jwt');
 const authenticate = expressJwt({ secret: SECRET });
 
-AuthRouter.get('/me', authenticate, function(req, res) {
+AuthRouter.get('/me', authenticate, verify, function(req, res) {
     res.status(200).json(req.user);
 });
 
-AuthRouter.post('/token', validateRefreshToken, generateAccessToken, respondToken);
+// получаем accessToken с помощью refreshToken который не обновляеться
+// AuthRouter.post('/token', validateRefreshToken, generateAccessToken, respondToken);
+
+// получаем accessToken,refreshToken  с помощью refreshToken
+AuthRouter.post('/token', validateRefreshToken, serializeClient, generateAccessToken,
+generateRefreshToken, respond);
+
 AuthRouter.post('/token/reject', rejectToken, respondReject);
 /* my testing routes*/
 AuthRouter.get('/melog', authenticate, isLogin, function(req, res) {
